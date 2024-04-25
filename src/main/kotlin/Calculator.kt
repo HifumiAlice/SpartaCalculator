@@ -2,7 +2,6 @@ package org.example
 
 class Calculator {
     private var operator: String = " "
-    private var result: Any = 0
 
     private val add = Add()
     private val sub = Sub()
@@ -12,11 +11,10 @@ class Calculator {
 
 
     fun changeMode(operator : String) {
-//        println("모드 변경하기")
+
         if (operator == "+" || operator == "-" || operator == "*" || operator == "/" || operator == "%") {
             this.operator = operator
-            println("모드가 변경되었습니다.")
-            println("현재 모드 : ${this.operator}")
+
         } else {
             println("-----------------------")
             println("연산기호가 잘못됐습니다.")
