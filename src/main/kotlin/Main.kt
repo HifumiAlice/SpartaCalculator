@@ -108,7 +108,17 @@ fun main() {
                     resultDouble = floor(resultDouble) / 100000.0
                 }
 
-                println("계산 결과 : ${resultDouble}")
+                if (resultDouble % 1.0 == 0.0) {
+                    resultLong = resultDouble.toLong()
+                    doubleFlag = false
+                }
+
+                if (doubleFlag == false ){
+                    println("계산 결과 : ${resultLong}")
+                } else {
+                    println("계산 결과 : ${resultDouble}")
+                }
+
 
             } else {
                 resultLong = cal.input(resultLong,numberLong).toString().toLong()
