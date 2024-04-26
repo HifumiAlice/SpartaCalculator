@@ -20,6 +20,8 @@
 수와  연산기호 입력창에 q 또는 quit을 입력 시 계산기가 종료됩니다.
 
 
+[사용영상](https://github.com/HifumiAlice/SpartaCalculator/blob/main/%EA%B3%84%EC%82%B0%EA%B8%B0%20%EC%82%AC%EC%9A%A9%20%EC%98%81%EC%83%81.mp4)
+
 ---------
 ### 개발 기간
 2024-04-22(월) ~ 2024-04-26(금) 5일간
