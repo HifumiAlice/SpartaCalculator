@@ -39,10 +39,11 @@ fun main() {
             println("------------------------------------")
             println("계산 결과를 초기화 합니다.")
             println("------------------------------------")
-            cnt = -1
+            cnt = 0
             doubleFlag = false
             resultDouble = 0.0
             resultLong = 0.toLong()
+            continue
         } else {
 
             try {
@@ -61,75 +62,16 @@ fun main() {
                 }
             }
 
-            if (cnt == 0) {
+        }
 
-                operator = returnOperator()
-
-                if (operator == "r" || operator == "reset") {
-                    cnt = 0
-                    longFlag = false
-                    doubleFlag = false
-                    resultDouble = 0.0
-                    resultLong = 0
-                    continue
-                } else if (operator == "q" || operator == "quit") {
-                    break
-                } else {
-                    cal.changeMode(operator)
-
-                    if (longFlag == true) {
-                        resultLong = numberLong
-                        resultDouble = resultLong.toDouble()
-                        longFlag = false
-                    } else {
-                        resultDouble = numberDouble
-                    }
-                    cnt++
-                    continue
-
-                }
-            }
-
-            if (doubleFlag == true) {
-
-                if(longFlag == true) {
-
-                    resultDouble = cal.input(resultDouble,numberLong).toString().toDouble()
-
-                    longFlag = false
-                } else {
-                    resultDouble = cal.input(resultDouble,numberDouble).toString().toDouble()
-                }
-
-                resultDouble = resultDouble * 100000
-                if (resultDouble - resultDouble.toLong() >= 0.5 ) {
-                    resultDouble = ceil(resultDouble) / 100000.0
-                } else {
-                    resultDouble = floor(resultDouble) / 100000.0
-                }
-
-                if (resultDouble % 1.0 == 0.0) {
-                    resultLong = resultDouble.toLong()
-                    doubleFlag = false
-                }
-
-                if (doubleFlag == false ){
-                    println("계산 결과 : ${resultLong}")
-                } else {
-                    println("계산 결과 : ${resultDouble}")
-                }
-
-
-            } else {
-                resultLong = cal.input(resultLong,numberLong).toString().toLong()
-                longFlag = false
-                resultDouble = resultLong.toDouble()
-                println("계산 결과 : ${resultLong}")
-            }
+        if (cnt == 0) {
 
             operator = returnOperator()
 
             if (operator == "r" || operator == "reset") {
+                println("------------------------------------")
+                println("계산 결과를 초기화 합니다.")
+                println("------------------------------------")
                 cnt = 0
                 longFlag = false
                 doubleFlag = false
@@ -140,9 +82,71 @@ fun main() {
                 break
             } else {
                 cal.changeMode(operator)
+
+                if (longFlag == true) {
+                    resultLong = numberLong
+                    resultDouble = resultLong.toDouble()
+                    longFlag = false
+                } else {
+                    resultDouble = numberDouble
+                }
+                cnt++
+                continue
+            }
+        }
+
+        if (doubleFlag == true) {
+
+            if(longFlag == true) {
+
+                resultDouble = cal.input(resultDouble,numberLong).toString().toDouble()
+
+                longFlag = false
+            } else {
+                resultDouble = cal.input(resultDouble,numberDouble).toString().toDouble()
             }
 
+            resultDouble = resultDouble * 100000
+            if (resultDouble - resultDouble.toLong() >= 0.5 ) {
+                resultDouble = ceil(resultDouble) / 100000.0
+            } else {
+                resultDouble = floor(resultDouble) / 100000.0
+            }
+
+            if (resultDouble % 1.0 == 0.0) {
+                resultLong = resultDouble.toLong()
+                doubleFlag = false
+            }
+
+            if (doubleFlag == false ){
+                println("계산 결과 : ${resultLong}")
+            } else {
+                println("계산 결과 : ${resultDouble}")
+            }
+
+
+        } else {
+            resultLong = cal.input(resultLong,numberLong).toString().toLong()
+            longFlag = false
+            resultDouble = resultLong.toDouble()
+            println("계산 결과 : ${resultLong}")
         }
+
+        operator = returnOperator()
+
+        if (operator == "r" || operator == "reset") {
+            cnt = 0
+            longFlag = false
+            doubleFlag = false
+            resultDouble = 0.0
+            resultLong = 0
+            continue
+        } else if (operator == "q" || operator == "quit") {
+            break
+        } else {
+            cal.changeMode(operator)
+        }
+
         cnt++
 
     }
