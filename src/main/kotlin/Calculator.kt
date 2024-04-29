@@ -1,41 +1,11 @@
-package org.example
+
+
+import operate.*
 
 class Calculator {
-    private var operator: String = " "
 
-    private val add = Add()
-    private val sub = Sub()
-    private val mul = Multiplication()
-    private val div = Divide()
-    private val remainder = Remainder()
-
-
-    fun changeMode(operator : String) {
-
-        if (operator == "+" || operator == "-" || operator == "*" || operator == "/" || operator == "%") {
-            this.operator = operator
-
-        } else {
-            println("-----------------------")
-            println("연산기호가 잘못됐습니다.")
-            println("현재 모드 : ${this.operator}")
-            println("-----------------------")
-        }
-    }
-
-    fun input(num1: Any, num2: Any): Any {
-        if (operator == "+") {
-            return add.calculate(num1, num2)
-        } else if (operator == "-") {
-            return sub.calculate(num1, num2)
-        } else if (operator == "*") {
-            return mul.calculate(num1, num2)
-        } else if (operator == "/") {
-            return div.calculate(num1, num2)
-        } else if (operator == "%") {
-            return remainder.calculate(num1, num2)
-        }
-        return num1
+    fun input(operator : AbstractCalculate, num1: Number, num2: Number): Number {
+        return operator.calculate(num1, num2)
     }
 
 }
