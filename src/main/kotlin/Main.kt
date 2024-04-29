@@ -1,177 +1,88 @@
-package org.example
-import java.util.Scanner
+
+
+import operate.*
 import kotlin.math.*
 
-fun main() {
-    val cal = Calculator()
-    val scanner = Scanner(System.`in`)
 
-    var numberLong : Long = 0
-    var numberDouble : Double = 0.0
-    var resultLong : Long = 0
-    var resultDouble : Double = 0.0
+fun main() {
+
+    val cal = Calculator()
+    var operatorList = mutableListOf("+","-","*","/","%")
+    val output = Input(operatorList)
 
     var operator : String = " "
-    var input : String = " "
 
-    var cnt : Int = 0
-    var doubleFlag : Boolean = false
-    var longFlag : Boolean = false
+    var resultNumber : Any
+    var number1 : Number = 0
+    var number2 : Number = 0
+    var numberFlag = false
 
-    println("------------------------------------")
-    println("계산기 사용법")
-    println("숫자 입력창에 정수 또는 실수를 입력해주세요 ")
-    println("연산 입력창에는 +, -, *, /, % 연산만 입력해주세요")
-    println("숫자 또는 연산 입력창에 \"q 또는 quit\"을 입력하면 계산기 작동을 멈춥니다.")
-    println("숫자 또는 연산 입력창에 \"r 또는 reset\"을 입력하면 계산값이 초기화 됩니다.")
-    println("------------------------------------")
+    PrintClass.firstPrint()
 
     while (true) {
-        print("숫자 입력창 :   ")
-        input = scanner.next()
+        resultNumber = output.returnStr("number")
 
-        if (input == "q" || input == "quit") {
-            println("------------------------------------")
-            println("계산기를 종료합니다.")
-            println("------------------------------------")
-            break
-        } else if (input == "r" || input == "reset") {
-            println("------------------------------------")
-            println("계산 결과를 초기화 합니다.")
-            println("------------------------------------")
-            cnt = 0
-            doubleFlag = false
-            resultDouble = 0.0
-            resultLong = 0.toLong()
-            continue
-        } else {
-
-            try {
-                numberLong = input.toLong()
-                longFlag = true
-            } catch (e: NumberFormatException) {
-
-                try {
-                    numberDouble = input.toDouble()
-                    doubleFlag = true
-                } catch (e: NumberFormatException) {
-                    println("------------------------------------")
-                    println("정수 또는 실수를 입력해주세요")
-                    println("------------------------------------")
-                    continue
-                }
-            }
-
-        }
-
-        if (cnt == 0) {
-
-            operator = returnOperator()
-
-            if (operator == "r" || operator == "reset") {
-                println("------------------------------------")
-                println("계산 결과를 초기화 합니다.")
-                println("------------------------------------")
-                cnt = 0
-                longFlag = false
-                doubleFlag = false
-                resultDouble = 0.0
-                resultLong = 0
+        if(resultNumber is Number) {
+            number2 = resultNumber
+        } else if (resultNumber is String) {
+            if (resultNumber == "r" || resultNumber == "reset") {
+                number1 = 0
+                number2 = 0
+                numberFlag = false
+                PrintClass.resetPrint()
                 continue
-            } else if (operator == "q" || operator == "quit") {
+            } else if (resultNumber == "q" || resultNumber == "quit") {
+                PrintClass.endPrint()
                 break
-            } else {
-                cal.changeMode(operator)
-
-                if (longFlag == true) {
-                    resultLong = numberLong
-                    resultDouble = resultLong.toDouble()
-                    longFlag = false
-                } else {
-                    resultDouble = numberDouble
-                }
-                cnt++
-                continue
             }
+
         }
 
-        if (doubleFlag == true) {
+        if (numberFlag == false) {
+            operator = output.returnStr("operator").toString()
+            number1 = number2
+            numberFlag = true
+            continue
+        }
 
-            if(longFlag == true) {
-
-                resultDouble = cal.input(resultDouble,numberLong).toString().toDouble()
-
-                longFlag = false
-            } else {
-                resultDouble = cal.input(resultDouble,numberDouble).toString().toDouble()
+        when (operator) {
+            "+" -> {
+                number1 = cal.input(Add(),number1,number2)
             }
+            "-" -> number1 = cal.input(Sub(),number1,number2)
+            "*" -> number1 = cal.input(Multiplication(),number1,number2)
+            "/" -> number1 = cal.input(Divide(),number1,number2)
+            "%" -> number1 = cal.input(Remainder(),number1,number2)
+        }
 
-            resultDouble = resultDouble * 100000
-            if (resultDouble - resultDouble.toLong() >= 0.5 ) {
-                resultDouble = ceil(resultDouble) / 100000.0
-            } else {
-                resultDouble = floor(resultDouble) / 100000.0
-            }
-
-            if (resultDouble % 1.0 == 0.0) {
-                resultLong = resultDouble.toLong()
-                doubleFlag = false
-            }
-
-            if (doubleFlag == false ){
-                println("계산 결과 : ${resultLong}")
-            } else {
-                println("계산 결과 : ${resultDouble}")
-            }
-
-
+        number1 = number1.toDouble() * 100000
+        if (number1 - number1.toLong() >= 0.5 ) {
+            number1 = ceil(number1) / 100000.0
         } else {
-            resultLong = cal.input(resultLong,numberLong).toString().toLong()
-            longFlag = false
-            resultDouble = resultLong.toDouble()
-            println("계산 결과 : ${resultLong}")
+            number1 = floor(number1) / 100000.0
         }
 
-        operator = returnOperator()
+        if (number1 % 1.0 == 0.0) number1 = number1.toLong()
+
+        PrintClass.resultNumber(number1)
+
+
+        operator = output.returnStr("operator").toString()
 
         if (operator == "r" || operator == "reset") {
-            cnt = 0
-            longFlag = false
-            doubleFlag = false
-            resultDouble = 0.0
-            resultLong = 0
+            number1 = 0
+            number2 = 0
+            numberFlag = false
+            PrintClass.resetPrint()
             continue
         } else if (operator == "q" || operator == "quit") {
+            PrintClass.endPrint()
             break
-        } else {
-            cal.changeMode(operator)
         }
 
-        cnt++
 
     }
 
+
 }
 
-fun returnOperator() : String{
-    val scanner = Scanner(System.`in`)
-    var input : String
-
-    while (true) {
-        print("연산기호 입력창 : ")
-        input = scanner.next()
-
-        if (input == "+" || input == "-" || input == "*" || input == "/" || input == "%") {
-            return input
-        } else if (input == "q" || input == "quit" || input == "r" || input == "reset") {
-            return input
-        }
-        else {
-            println("------------------------------------")
-            println("연산기호가 잘못됐습니다.")
-            println("다시 입력해주세요 : ")
-            println("------------------------------------")
-        }
-
-    }
-}
