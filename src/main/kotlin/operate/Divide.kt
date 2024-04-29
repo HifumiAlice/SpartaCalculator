@@ -1,10 +1,13 @@
-package org.example
+package operate
+
+import PrintClass
 
 class Divide : AbstractCalculate() {
-    override fun calculate(num1: Any, num2: Any): Any {
+    override fun calculate(num1: Number, num2: Number): Number {
         if (num1 is Long && num2 is Long) {
 
             if (zeroCheck(num2)) {
+                PrintClass.zeroDivision()
                 return num1
             } else {
                 println("${num1} / ${num2} = ${num1 / num2}")
@@ -14,6 +17,7 @@ class Divide : AbstractCalculate() {
         } else if (num1 is Long && num2 is Double) {
 
             if (zeroCheck(num2)) {
+                PrintClass.zeroDivision()
                 return num1
             } else {
                 println("${num1} / ${num2} = ${num1 / num2}")
@@ -23,6 +27,7 @@ class Divide : AbstractCalculate() {
         } else if (num1 is Double && num2 is Long) {
 
             if (zeroCheck(num2)) {
+                PrintClass.zeroDivision()
                 return num1
             } else {
                 println("${num1} / ${num2} = ${num1 / num2}")
@@ -32,6 +37,7 @@ class Divide : AbstractCalculate() {
         } else if (num1 is Double && num2 is Double) {
 
             if (zeroCheck(num2)) {
+                PrintClass.zeroDivision()
                 return num1
             } else {
                 println("${num1} / ${num2} = ${num1 / num2}")

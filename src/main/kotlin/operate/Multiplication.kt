@@ -1,7 +1,7 @@
-package org.example
+package operate
 
 class Multiplication : AbstractCalculate() {
-    override fun calculate(num1: Any, num2: Any): Any {
+    override fun calculate(num1: Number, num2: Number): Number {
         if (num1 is Long && num2 is Long) {
             println("${num1} X ${num2} = ${num1 * num2}")
             return num1 * num2
